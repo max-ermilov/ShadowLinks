@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowLinks Decoder</title>
+    <link rel="stylesheet" href="{% static 'mainapp/styles.css' %}">
+    <!-- Подключаем стили для json-viewer -->
+{#    <link rel="stylesheet" href="{% static 'json-viewer/jquery.json-viewer.css' %}">#}
+</head>
+<body>
+<div class="container">
+    <!-- Шапка с кратким описанием -->
+    <header>
+        <h1>ShadowLinks Decoder</h1>
+        <p>Введите ссылку, и мы декодируем её содержимое с помощью скрипта.</p>
+    </header>
+
+    <!-- Форма для ввода ссылки -->
+    <form id="decodeForm" method="">
+        <div class="form-group">
+            <label for="urlInput">Вставьте ссылку для декодирования:</label>
+            <input type="text" id="urlInput" name="url" placeholder="Введите ссылку" required>
+        </div>
+
+        <!-- Кнопка для декодирования -->
+        <button type="button" id="decodeButton">Декодировать ссылку</button>
+    </form>
+
+    <!-- Поле для вывода декодированной информации -->
+    <div id="resultContainer">
+        <h2>Результат декодирования:</h2>
+        <div id="jsonViewer"></div> <!-- Контейнер для json-viewer -->
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
+{#<script src="{% static 'json-viewer/jquery.json-viewer.js' %}"></script>#}
+<script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer@3"></script>
+<!-- Подключаем JavaScript из базы данных -->
+{% for script in scripts %}
+    <script type="text/javascript">
+      //{{ script.name }}
+      {{ script.script_content|safe }}
+    </script>
+{% endfor %}
+
+<!-- Локальный JS -->
+<script src="{% static 'mainapp/scripts.js' %}"></script>
+
+</body>
+</html>
